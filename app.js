@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const connect = require('./schemas');
-connect();
+
 
 const goodsRouter = require("./routes/goods.js");
+const cartsRouter = require("./routes/carts.js");
 
 app.use(express.json());
 
@@ -27,9 +28,10 @@ app.get("/:id", (req, res) => {
   res.send(":id URL에 정상적으로 반환되었습니다")
 })
 
-app.use("/api",goodsRouter);
+app.use("/api", [goodsRouter,cartsRouter]);
 
-
+connect();
 app.listen(port, () => {
   console.log(port, '포트로 서버가 열렸어요!');
 });
+
