@@ -20,6 +20,7 @@ router.post("/goods/:goodsId/cart", async(req, res) => {
 })
 
 const Goods = require("../schemas/goods.js");
+const goods = require("../schemas/goods.js");
 router.post("/goods", async (req, res) => {
         const { goodsId, name, thumbnailUrl, category, price } = req.body;
 
@@ -50,15 +51,18 @@ router.put("/goods/:goodsId/cart", async(req,res) => {
 router.delete("/goods/:goodsId/cart", async(req,res) => {
   const {goodsId} = req.params;
 
-  const existsCarts = await Cart.find({goodsId});
+  const existsCarts = await Goods.find({goodsId});
+  console.log(existsCarts)
   if (existsCarts.length) {
-    await Cart.deleteOne({goodsId});
+    await Goods.deleteOne({goodsId});
   }
   res.json({result : "success"});
 })
 
 //상품 목록 조회 API
-router.get("/goods", (req, res) => {
-	res.json({ goods: goods });
+router.get("/goods", async (req, res) => {
+  const goods = await Goods.find({}).sort({ id: -1 });
+res.json({ data: goods });
 });
+
 module.exports = router;

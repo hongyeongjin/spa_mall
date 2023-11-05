@@ -6,6 +6,7 @@ const connect = require('./schemas');
 
 const goodsRouter = require("./routes/goods.js");
 const cartsRouter = require("./routes/carts.js");
+const products = require("./routes/products.router.js");
 
 app.use(express.json());
 
@@ -28,7 +29,7 @@ app.get("/:id", (req, res) => {
   res.send(":id URL에 정상적으로 반환되었습니다")
 })
 
-app.use("/api", [goodsRouter,cartsRouter]);
+app.use("/api", [goodsRouter,cartsRouter,products]);
 
 connect();
 app.listen(port, () => {
